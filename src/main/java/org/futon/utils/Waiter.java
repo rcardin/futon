@@ -21,16 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.futon.widgets;
+package org.futon.utils;
 
 /**
- * Object representing a widget on a particular platform.
- *
- * TODO To develop carefully.
+ * Implement waiting strategy of a functional testing platform.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public interface Testable {
+public interface Waiter {
+    /**
+     * Wait for a while, blocking the execution of the test script.
+     */
+    public void sleep();
 }

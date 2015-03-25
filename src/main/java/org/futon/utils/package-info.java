@@ -21,16 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.futon.widgets;
 
 /**
- * Object representing a widget on a particular platform.
- *
- * TODO To develop carefully.
+ * Utils classes.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public interface Testable {
-}
+package org.futon.utils;

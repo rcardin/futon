@@ -24,6 +24,7 @@
 package org.futon.widgets;
 
 import org.futon.exceptions.ObjectNotFoundException;
+import org.futon.utils.Waiter;
 
 /**
  * Generic widget.
@@ -33,6 +34,16 @@ import org.futon.exceptions.ObjectNotFoundException;
  * @since 1.0
  */
 public abstract class Widget {
+
+    /**
+     * Default number of retries of synchronization on the widget.
+     */
+    private static final int MAX_RETRIES = 100;
+
+    /**
+     * Default range of container reloading.
+     */
+    private static final int RELOAD_RANGE = 10;
 
     /**
      * Ctor.
@@ -50,10 +61,8 @@ public abstract class Widget {
         this.container = container;
     }
 
-    /**
-     * FIXME How the hell will I initialize this object?!
-     */
-    private Synchronizer synchronizer;
+    // FIXME How the hell will I initialize this object?
+    private Waiter waiter;
 
     /**
      * Container of the widget.
@@ -61,12 +70,29 @@ public abstract class Widget {
     private Container container;   // FIXME To initialize.
 
     /**
-     * Do the operation needed on the widget.
+     * Do the operation needed on the widget synchronizing on it.
+     *
+     * @throws ObjectNotFoundException If there is no widget ready for syncronization.
      */
     protected void doAction() {
-        // Syncronizing on the widget, which means trying to do the
-        // operation on it.
-        synchronizer.sync();
+        int index = 0;
+        boolean done = false;
+        Exception ex = null;
+        while (!done && index < MAX_RETRIES) {
+            try {
+                doOnTestable(findTestable());
+                done = true;
+            } catch (Exception e) {
+                index++;
+                ex = e;
+                waiter.sleep();
+                if (index % RELOAD_RANGE == 0) {
+                    container.reload();
+                }   // if (section != null && index % 10 == 0)
+            }
+        }   // while (!done && index < MAX_RETRIES)
+        if (!done)
+            throw new ObjectNotFoundException(ex);
     }
 
     /**
@@ -82,56 +108,4 @@ public abstract class Widget {
      * @param testable Platform specific object.
      */
     protected abstract void doOnTestable(Testable testable);
-
-    /**
-     * <p>Implements the algorithm of synchronization on a widget. Inside the synchronizer
-     *    are made all the operation needed to execute the operation on the widget.
-     * </p>
-     * <p>Classes extending the synchronizer must implement the synchronization on a
-     *    particular platform.
-     * </p>
-     */
-    public abstract class Synchronizer {
-
-        /**
-         * Default number of retries of synchronization on the widget.
-         */
-        private static final int MAX_RETRIES = 100;
-
-        /**
-         * Default range of container reloading.
-         */
-        private static final int RELOAD_RANGE = 10;
-
-        /**
-         * Syncronize on the widget.
-         *
-         * @throws ObjectNotFoundException If there is no widget ready for syncronization.
-         */
-        public void sync() throws ObjectNotFoundException{
-            int index = 0;
-            boolean done = false;
-            Exception ex = null;
-            while (!done && index < MAX_RETRIES) {
-                try {
-                    doOnTestable(findTestable());
-                    done = true;
-                } catch (Exception e) {
-                    index++;
-                    ex = e;
-                    sleep();
-                    if (index % RELOAD_RANGE == 0) {
-                       container.reload();
-                    }   // if (section != null && index % 10 == 0)
-                }
-            }   // while (!done && index < MAX_RETRIES)
-            if (!done)
-                throw new ObjectNotFoundException(ex);
-        }
-
-        /**
-         * Block the synchronization process for some time.
-         */
-        protected abstract void sleep();
-    }
 }
