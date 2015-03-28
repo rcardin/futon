@@ -23,6 +23,7 @@
  */
 package org.futon.widgets;
 
+import org.futon.Testable;
 import org.futon.exceptions.ObjectNotFoundException;
 import org.futon.utils.Waiter;
 
@@ -70,17 +71,41 @@ public abstract class Widget {
     private Container container;   // FIXME To initialize.
 
     /**
-     * Do the operation needed on the widget synchronizing on it.
+     * <p>Do the operation needed on the widget synchronizing on it.</p>
+     * <p>The method is a template method, completed by #waitForTestable
+     *    and #doOnTestable.
+     * </p>
      *
      * @throws ObjectNotFoundException If there is no widget ready for syncronization.
      */
-    protected void doAction() {
+    protected final Testable doAction() {
+        return sync(new Function() {
+            @Override
+            public Testable apply() {
+                Testable testable = waitForTestable();
+                doOnTestable(testable);
+                return testable;
+            }
+        });
+    }
+
+    /**
+     * Retries to apply the {@code function} until the testable object is available and returns it.
+     * The function is applied for a max of #MAX_RETRIES times. Every time, the process wait for
+     * a little time, using the policy defined in the #waiter. Every #RELOAD_RANGE times, the
+     * #container of the object is reloaded.
+     *
+     * @param function The function to be applied repeatedly.
+     * @return The testable object resulting from the application of the {@code function}
+     */
+    protected final Testable sync(Function function) {
         int index = 0;
         boolean done = false;
         Exception ex = null;
+        Testable testable = null;
         while (!done && index < MAX_RETRIES) {
             try {
-                doOnTestable(findTestable());
+                testable = function.apply();
                 done = true;
             } catch (Exception e) {
                 index++;
@@ -93,6 +118,24 @@ public abstract class Widget {
         }   // while (!done && index < MAX_RETRIES)
         if (!done)
             throw new ObjectNotFoundException(ex);
+        return testable;
+    }
+
+    /**
+     * <p>Find a testable object inside a #container. The operation in synchronized on
+     *    the testable object.
+     * </p>
+     * <p>The method is a template method, completed by #findTestable.</p>
+     *
+     * @return A testable object.
+     */
+    private Testable waitForTestable() {
+        return sync(new Function() {
+            @Override
+            public Testable apply() {
+                return findTestable();
+            }
+        });
     }
 
     /**
@@ -108,4 +151,18 @@ public abstract class Widget {
      * @param testable Platform specific object.
      */
     protected abstract void doOnTestable(Testable testable);
+
+    /**
+     * A function to be done in a synchronous that returns a testable object.
+     *
+     * @see #sync(org.futon.widgets.Widget.Function)
+     */
+    private interface Function {
+        /**
+         * Execute the function to retrieve a testable object.
+         *
+         * @return A testable object.
+         */
+        public Testable apply();
+    }
 }

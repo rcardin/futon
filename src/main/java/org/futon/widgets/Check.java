@@ -23,14 +23,18 @@
  */
 package org.futon.widgets;
 
+import org.futon.actions.Clickable;
+
 /**
- * Object representing a widget on a particular platform.
- *
- * TODO To develop carefully.
+ * A single check (like a boolean value).
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public interface Testable {
+public abstract class Check extends Widget implements Clickable {
+    @Override
+    public void click() {
+        doAction();
+    }
 }
