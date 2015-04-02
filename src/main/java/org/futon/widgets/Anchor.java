@@ -23,8 +23,10 @@
  */
 package org.futon.widgets;
 
+import org.futon.Testable;
 import org.futon.actions.Clickable;
 import org.futon.actions.Verifiable;
+import org.futon.exceptions.ObjectNotFoundException;
 
 /**
  * An anchor (a.k.a. a link).
@@ -44,7 +46,15 @@ public abstract class Anchor extends Widget implements Clickable, Verifiable {
 
     @Override
     public boolean exists() {
-        // FIXME How can I synchronize on the object w/out doing the action?
-        return false;
+        boolean result = true;
+        try {
+            // Wait for the object to exists
+            waitForTestable();
+        } catch (ObjectNotFoundException oe) {
+            // In case the object could not be found using
+            // synchronization, return false.
+            result = false;
+        }
+        return result;
     }
 }

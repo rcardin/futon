@@ -21,19 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.futon.widgets;
-
-import org.futon.actions.Clickable;
-import org.futon.actions.Gettable;
 
 /**
- * A button that is clickable and with a gettable label.
+ * Please, insert description here.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Button extends Widget implements Clickable, Gettable {
+package org.futon.widgets;
+
+import org.futon.actions.Clickable;
+import org.futon.actions.Reloadable;
+
+/**
+ * Please, insert description here.
+ *
+ * @author Riccardo Cardin
+ * @version 1.0
+ * @since 1.0
+ */
+public abstract class Section extends Widget implements Reloadable, Clickable {
     @Override
     public void click() {
         doAction();

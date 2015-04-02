@@ -21,21 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.futon.widgets;
-
-import org.futon.actions.Clickable;
-import org.futon.actions.Gettable;
+package org.futon.actions;
 
 /**
- * A button that is clickable and with a gettable label.
+ * Definition of the reaload action on a widget.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Button extends Widget implements Clickable, Gettable {
-    @Override
-    public void click() {
-        doAction();
-    }
+public interface Reloadable {
+    /**
+     * Reloads the widget acquiring possible page's changes.
+     */
+    public void reload();
 }

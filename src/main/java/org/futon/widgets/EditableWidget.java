@@ -23,19 +23,31 @@
  */
 package org.futon.widgets;
 
-import org.futon.actions.Clickable;
-import org.futon.actions.Gettable;
+import org.futon.actions.Editable;
 
 /**
- * A button that is clickable and with a gettable label.
+ * A widget which value could be edited.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Button extends Widget implements Clickable, Gettable {
+public abstract class EditableWidget extends Widget implements Editable {
+    /**
+     * The value of the widget.
+     */
+    private String value;
+
+    /**
+     * Set the value on the widget.
+     *
+     * @param value The value to be setted.
+     *
+     * @see Widget#doAction()
+     */
     @Override
-    public void click() {
+    public void setValue(String value) {
+        this.value = value;
         doAction();
     }
 }

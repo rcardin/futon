@@ -24,6 +24,7 @@
 package org.futon.widgets;
 
 import org.futon.Testable;
+import org.futon.actions.Reloadable;
 import org.futon.exceptions.ObjectNotFoundException;
 import org.futon.utils.Waiter;
 
@@ -56,10 +57,10 @@ public abstract class Widget {
     /**
      * Construct a widget inside a container.
      *
-     * @param container A container widget.
+     * @param reloadable A container widget.
      */
-    public Widget(Container container) {
-        this.container = container;
+    public Widget(Reloadable reloadable) {
+        this.reloadable = reloadable;
     }
 
     // FIXME How the hell will I initialize this object?
@@ -68,7 +69,7 @@ public abstract class Widget {
     /**
      * Container of the widget.
      */
-    private Container container;   // FIXME To initialize.
+    private Reloadable reloadable;   // FIXME To initialize.
 
     /**
      * <p>Do the operation needed on the widget synchronizing on it.</p>
@@ -112,7 +113,7 @@ public abstract class Widget {
                 ex = e;
                 waiter.sleep();
                 if (index % RELOAD_RANGE == 0) {
-                    container.reload();
+                    reloadable.reload();
                 }   // if (section != null && index % 10 == 0)
             }
         }   // while (!done && index < MAX_RETRIES)
@@ -129,7 +130,7 @@ public abstract class Widget {
      *
      * @return A testable object.
      */
-    private Testable waitForTestable() {
+    protected final Testable waitForTestable() {
         return sync(new Function() {
             @Override
             public Testable apply() {

@@ -21,21 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.futon.widgets;
-
-import org.futon.actions.Clickable;
-import org.futon.actions.Gettable;
 
 /**
- * A button that is clickable and with a gettable label.
+ * Please, insert description here.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Button extends Widget implements Clickable, Gettable {
-    @Override
-    public void click() {
-        doAction();
-    }
+package org.futon.widgets;
+
+import org.futon.actions.Gettable;
+
+/**
+ * A drop down menu realized using CSS and not the HTML primitive {@code select}.
+ *
+ * @author Riccardo Cardin
+ * @version 1.0
+ * @since 1.0
+ */
+public abstract class SelectJs extends EditableWidget implements Gettable {
+
 }

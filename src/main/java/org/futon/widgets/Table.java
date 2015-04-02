@@ -23,13 +23,43 @@
  */
 package org.futon.widgets;
 
+import org.futon.actions.Clickable;
+import org.futon.actions.Reloadable;
+
 /**
- * Container of widget. It can be reloaded.
+ * A table.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public interface Container {
-    public void reload();
+public abstract class Table extends Widget implements Reloadable, Clickable {
+
+    @Override
+    public void click() {
+        doAction();
+    }
+
+    /**
+     * Returns the number of rows of the table.
+     *
+     * @return The number of rows.
+     */
+    public abstract int getRowCount();
+
+    /**
+     * Returns the number of columns of the table.
+     *
+     * @return The number of columns.
+     */
+    public abstract int getColumnCount();
+
+    /**
+     * Returns the value of the cell at position {@code (row, col)}.
+     *
+     * @param row Requested row
+     * @param col Requested column
+     * @return The value of the cell at position {@code (row, col)}.
+     */
+    public abstract String getCellValue(int row, int col);
 }
