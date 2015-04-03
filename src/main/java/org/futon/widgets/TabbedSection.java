@@ -23,12 +23,33 @@
  */
 package org.futon.widgets;
 
+import org.futon.actions.Clickable;
+import org.futon.actions.Reloadable;
+
 /**
- * A value of a group of checkboxes.
+ * A section inside a tab.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Checkbox extends ClickableWidget {
+public abstract class TabbedSection extends Widget implements Reloadable, Clickable {
+    /**
+     * Tab's label.
+     */
+    private final String title;
+
+    /**
+     * Ctor.
+     *
+     * @param title Tab's label
+     */
+    public TabbedSection(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public void click() {
+        doAction();
+    }
 }

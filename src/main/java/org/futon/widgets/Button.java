@@ -23,7 +23,6 @@
  */
 package org.futon.widgets;
 
-import org.futon.actions.Clickable;
 import org.futon.actions.Gettable;
 
 /**
@@ -33,9 +32,6 @@ import org.futon.actions.Gettable;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Button extends Widget implements Clickable, Gettable {
-    @Override
-    public void click() {
-        doAction();
-    }
+public abstract class Button extends ClickableWidget implements Gettable {
+
 }

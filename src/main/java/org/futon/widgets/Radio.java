@@ -23,8 +23,6 @@
  */
 package org.futon.widgets;
 
-import org.futon.actions.Clickable;
-
 /**
  * A single value of a group of radio buttons.
  *
@@ -32,9 +30,5 @@ import org.futon.actions.Clickable;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Radio extends Widget implements Clickable {
-    @Override
-    public void click() {
-        doAction();
-    }
+public abstract class Radio extends ClickableWidget {
 }

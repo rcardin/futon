@@ -23,12 +23,36 @@
  */
 package org.futon.widgets;
 
+import org.futon.actions.Reloadable;
+import org.futon.exceptions.InvalidActionException;
+
 /**
- * A value of a group of checkboxes.
+ * A section that can be closed.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Checkbox extends ClickableWidget {
+public abstract class ClosableSection extends ClickableWidget implements Reloadable {
+
+    /**
+     * Closes the section.
+     *
+     * @throws InvalidActionException If the section is already closed.
+     */
+    public abstract void close() throws InvalidActionException;
+
+    /**
+     * Opens the section.
+     *
+     * @throws InvalidActionException If the section is already open.
+     */
+    public abstract void open() throws InvalidActionException;
+
+    /**
+     * Returns {@code true} is the section is closed.
+     *
+     * @return {@code true} is the section is closed.
+     */
+    public abstract boolean closed();
 }

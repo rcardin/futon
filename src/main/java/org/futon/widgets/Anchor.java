@@ -23,8 +23,6 @@
  */
 package org.futon.widgets;
 
-import org.futon.Testable;
-import org.futon.actions.Clickable;
 import org.futon.actions.Verifiable;
 import org.futon.exceptions.ObjectNotFoundException;
 
@@ -35,14 +33,7 @@ import org.futon.exceptions.ObjectNotFoundException;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Anchor extends Widget implements Clickable, Verifiable {
-    /**
-     * Clicks the anchor.
-     */
-    @Override
-    public void click() {
-        doAction();
-    }
+public abstract class Anchor extends ClickableWidget implements Verifiable {
 
     @Override
     public boolean exists() {

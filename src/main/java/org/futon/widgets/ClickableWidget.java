@@ -23,12 +23,21 @@
  */
 package org.futon.widgets;
 
+import org.futon.actions.Clickable;
+
 /**
- * A value of a group of checkboxes.
+ * A clickable widget.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Checkbox extends ClickableWidget {
+public abstract class ClickableWidget extends Widget implements Clickable {
+    /**
+     * Clicks on the widget.
+     */
+    @Override
+    public void click() {
+        doAction();
+    }
 }

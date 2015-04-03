@@ -23,7 +23,6 @@
  */
 package org.futon.widgets;
 
-import org.futon.actions.Clickable;
 import org.futon.actions.Reloadable;
 
 /**
@@ -33,12 +32,7 @@ import org.futon.actions.Reloadable;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Table extends Widget implements Reloadable, Clickable {
-
-    @Override
-    public void click() {
-        doAction();
-    }
+public abstract class Table extends ClickableWidget implements Reloadable {
 
     /**
      * Returns the number of rows of the table.

@@ -21,14 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.futon.widgets;
 
 /**
- * A value of a group of checkboxes.
+ * Please, insert description here.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class Checkbox extends ClickableWidget {
+package org.futon.exceptions;
+
+/**
+ * Please, insert description here.
+ *
+ * @author Riccardo Cardin
+ * @version 1.0
+ * @since 1.0
+ */
+public class InvalidActionException extends RuntimeException {
+    /**
+     * Constructs an exception with no detail message.
+     */
+    public InvalidActionException() {
+    }
+
+    /**
+     * Constructs an exception with {@code message} as detail.
+     *
+     * @param message Exception's detail.
+     */
+    public InvalidActionException(String message) {
+        super(message);
+    }
+
+    /**
+     * Constructs a wrapper exception to {@code cause}.
+     *
+     * @param cause The cause of the exception.
+     */
+    public InvalidActionException(Throwable cause) {
+        super(cause);
+    }
 }
