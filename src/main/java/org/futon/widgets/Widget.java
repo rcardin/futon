@@ -26,6 +26,7 @@ package org.futon.widgets;
 import org.futon.Testable;
 import org.futon.actions.Reloadable;
 import org.futon.exceptions.ObjectNotFoundException;
+import org.futon.utils.FProperties;
 import org.futon.utils.Waiter;
 
 /**
@@ -40,12 +41,14 @@ public abstract class Widget {
     /**
      * Default number of retries of synchronization on the widget.
      */
-    private static final int MAX_RETRIES = 100;
+    private static final int MAX_RETRIES =
+            Integer.valueOf(FProperties.INSTANCE.get(FProperties.Property.MAX_RETRIES));
 
     /**
      * Default range of container reloading.
      */
-    private static final int RELOAD_RANGE = 10;
+    private static final int RELOAD_RANGE =
+            Integer.valueOf(FProperties.INSTANCE.get(FProperties.Property.RELOAD_RANGE));
 
     /**
      * Ctor.
